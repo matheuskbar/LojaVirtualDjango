@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    #bg-top-header {
+        background-color: #121317;
+    }
+
+    #top-header {
+        margin: auto;
+        color: #FFF;
+        height: 2.2em;
+        padding-top: 0.3em;
+    }
+{% endblock %}
+
+{% block top-header %}
+    <div id="bg-top-header">
+        <div id="top-header" class="container row">
+            <p class="col-8 text-start">Frete grátis para compras acima de R$ 149,00</p>
+            <p class="col-4 text-end">Nossas redes</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block header %}
+{% endblock %}

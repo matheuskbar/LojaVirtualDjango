@@ -11,6 +11,7 @@
     <title>{% block title %}Minha Loja{% endblock %}</title>
 
     <style>
+
       {% block style %}
       {% endblock %}
     </style>
@@ -18,10 +19,9 @@
   </head>
   <body>
     {% block top-header %}
-      <div>
-        <p>Frete grátis para compras acima de R$ 149,00</p>
-        <p>Nossas redes</p>
-      </div>
+    {% endblock %}
+
+    {% block header %}
     {% endblock %}
 
     <!-- Optional JavaScript; choose one of the two! -->
