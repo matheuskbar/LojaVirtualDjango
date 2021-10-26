@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+    nav {
+        background-color: #121317;
+    }
+
+{% endblock %}
+
+{% block header %}
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'pages:home' %}">
+              <img id="logo-img" src="/static/img/logo.png" alt="Minha loja">
+          </a>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'products:product-list' %}">Loja</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Tendências</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Carrinho</a>
+            </li>
+          </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <main class="container-fluid row" style="padding: 2em 2em; margin: auto;">
+        <div class="col-5">
+            <img src="/media/{{ object.image }}" alt="" style="width: 100%;">
+        </div>
+        <div class="col-7">
+            <h3>{{ object.name }}</h3>
+            <h2>R$ {{ object.price }}</h2>
+            <p>{{ object.description }}</p>
+        </div>
+    </main>
+{% endblock %}

@@ -42,13 +42,20 @@
     <main class="container-fluid row" style="margin: auto;">
         <h1 class="text-center">Nossos Produtos</h1>
         <aside class="col-3">
-            Teste de categoria
+            <h6>CATEGORIAS DE PRODUTO</h6>
+            <ul class="list-group">
+                {% for cat in category %}
+                    <li class="list-group-item"><a href="#" class="product-link">{{ cat.name }}</a></li>
+                {% empty %}
+                    <h6>Não há categorias para exibir</h6>
+                {% endfor %}
+            </ul>
         </aside>
         <div class="col-9 text-center">
             <div class="row">
                 {% for prod in object_list %}
                     <div class="col-4" style="padding: 0.5em 0.3em;">
-                        <a class="product-link" href="#">
+                        <a class="product-link" href="{% url 'products:product-detail' prod.slug %}">
                             <div class="card">
                                 <img src="/media/{{ prod.image }}" class="card-img-top" alt="">
                                 <div class="card-body">
