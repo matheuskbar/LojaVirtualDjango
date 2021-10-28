@@ -14,11 +14,12 @@ class ProductDetail(DetailView):
 
 
 class ProductsList(ListView):
-    category = None
-    paginate_by = 9
+    # category = None
+    # paginate_by = 9
+    queryset = Product.available.all()
 
-    def get_queryset(self):
-        queryset = Product.available.all()
+    # def get_queryset(self):
+    #     queryset = Product.available.all()
 
 
 
