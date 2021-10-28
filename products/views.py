@@ -14,10 +14,15 @@ class ProductDetail(DetailView):
 
 
 class ProductsList(ListView):
+    category = None
+    paginate_by = 9
 
-    model = Product
+    def get_queryset(self):
+        queryset = Product.available.all()
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = Category.objects.all()
-        return context
+
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['category'] = Category.objects.all()
+    #     return context
