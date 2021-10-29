@@ -11,6 +11,14 @@
 
 {% endblock %}
 
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Produtos
+    {% endif %}
+{% endblock title %}
+
 {% block header %}
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
@@ -22,7 +30,7 @@
               <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link white" href="{% url 'products:product-list' %}">Loja</a>
+              <a class="nav-link white" href="{% url 'products:list' %}">Loja</a>
             </li>
             <li class="nav-item">
               <a class="nav-link white" href="#">Tendências</a>
@@ -44,8 +52,14 @@
         <aside class="col-3">
             <h6>CATEGORIAS DE PRODUTO</h6>
             <ul class="list-group">
-                {% for cat in category %}
-                    <li class="list-group-item"><a href="#" class="product-link">{{ cat.name }}</a></li>
+                <li class="list-group-item">
+                    <a href="{% url 'products:list' %}" class="product-link">Todos os produtos</a>
+                </li>
+
+                {% for cat in categories %}
+                    <li class="list-group-item {% if category == cat %}active{% endif %}">
+                        <a href="#" class="product-link">{{ cat.name }}</a>
+                    </li>
                 {% empty %}
                     <h6>Não há categorias para exibir</h6>
                 {% endfor %}
@@ -55,7 +69,7 @@
             <div class="row">
                 {% for prod in object_list %}
                     <div class="col-4" style="padding: 0.5em 0.3em;">
-                        <a class="product-link" href="{% url 'products:product-detail' prod.slug %}">
+                        <a class="product-link" href="{% url 'products:detail' prod.slug %}">
                             <div class="card">
                                 <img src="/media/{{ prod.image }}" class="card-img-top" alt="">
                                 <div class="card-body">
