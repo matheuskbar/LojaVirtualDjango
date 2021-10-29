@@ -1,5 +1,6 @@
 from autoslug import AutoSlugField
 from django.db import models
+from django.urls import reverse
 from model_utils.models import TimeStampedModel
 from stdimage import StdImageField
 
@@ -26,3 +27,6 @@ class Product(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('products:detail', kwargs={'slug': self.slug})

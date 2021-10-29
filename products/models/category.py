@@ -15,4 +15,4 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('people-detail', kwargs={'pk': self.pk})
+        return reverse('products:list_by_category', kwargs={'slug': self.slug})
