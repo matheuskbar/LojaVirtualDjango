@@ -2,17 +2,6 @@
 
 {% block style %}
 
-    a {
-        color: #FFF;
-        text-decoration: none;
-    }
-
-    .white {
-        color: #FFF;
-    }
-
-
-
     #bg-top-header {
         background-color: #121317;
     }
@@ -34,10 +23,6 @@
         height: 36em;
         background-position: center;
         background-size: cover;
-    }
-
-    #logo-img {
-        width: 8em;
     }
 
     #box-text-header {
@@ -119,7 +104,7 @@
                   <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link white" href="#">Loja</a>
+                  <a class="nav-link white" href="{% url 'products:list' %}">Loja</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link white" href="#">Tendências</a>
