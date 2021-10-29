@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 
 {% block style %}
-
-    nav {
+    #main-nav {
         background-color: #121317;
     }
 
-    .black {
-        color: #000;
+    .product-link {
+        color: black;
     }
 
 {% endblock %}
 
+{% block title %}Carrinho{% endblock %}
+
 {% block header %}
-    <nav class="navbar navbar-expand-lg">
+    <nav id="main-nav" class="navbar navbar-expand-lg">
       <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'pages:home' %}">
               <img id="logo-img" src="/static/img/logo.png" alt="Minha loja">
@@ -40,15 +41,9 @@
 {% endblock %}
 
 {% block content %}
-    <main class="container-fluid row" style="padding: 2em 2em; margin: auto;">
-        <div class="col-5">
-            <img src="/media/{{ object.image }}" alt="" style="width: 100%;">
-        </div>
-        <div class="col-7">
-            <h3>{{ object.name }}</h3>
-            <h2>R$ {{ object.price }}</h2>
-            <p>{{ object.description }}</p>
-            <a class="btn btn-danger" href="{% url 'cart:add' object.id %}">ADD</a>
-        </div>
-    </main>
+    {% if cart %}
+        {{cart}}
+    {% else %}
+        <h6>O carrinho está vazio.</h6>
+    {% endif %}
 {% endblock %}
