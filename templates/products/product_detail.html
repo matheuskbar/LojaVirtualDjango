@@ -48,7 +48,6 @@
             <h3>{{ object.name }}</h3>
             <h2>R$ {{ object.price }}</h2>
             <p>{{ object.description }}</p>
-            <a class="btn btn-danger" href="{% url 'cart:add' object.id %}">ADD</a>
         </div>
     </main>
 {% endblock %}
