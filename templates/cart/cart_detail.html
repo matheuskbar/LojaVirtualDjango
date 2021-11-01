@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block style %}
     #main-nav {
         background-color: #121317;
     }
 
-    .product-link {
+    .black {
         color: black;
     }
 
@@ -42,7 +44,41 @@
 
 {% block content %}
     {% if cart %}
-        {{cart}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">PRODUTO</th>
+              <th scope="col">PREÇO</th>
+              <th scope="col">QUANTIDADE</th>
+              <th scope="col">TOTAL</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <tr>
+                        <th scope="row" class="text-center">
+                            <img src="/media/{{ product.image }}" alt="" style="width: 6em;">
+                        </th>
+                        <td class="align-middle">
+                            <a href="{{ product.get_absolute_url }}" class="black"><b>{{ product.name }}</b></a>
+                        </td>
+                        <td class="align-middle">R$ {{ item.price }}</td>
+                        <td class="align-middle">{{ item.quantity }}</td>
+                        <td class="align-middle">R$ {{ item.total_price }}</td>
+                        <td class="align-middle">
+                            <form action="{% url 'cart:remove' product.id %}" method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="Remover">
+                            </form>
+                        </td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+          </tbody>
+        </table>
     {% else %}
         <h6>O carrinho está vazio.</h6>
     {% endif %}

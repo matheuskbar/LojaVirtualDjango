@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cart',
     # Outros apps
     'debug_toolbar',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
