@@ -6,14 +6,6 @@ from cart.forms.cart_add_form import CartAddProductForm
 from products.models import Product
 
 
-def cart_detail(request):
-    cart = Cart(request)
-    context = {
-        'cart': cart
-    }
-    return render(request, 'cart/cart_detail.html', context)
-
-
 @require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
@@ -27,6 +19,7 @@ def cart_add(request, product_id):
             quantity=cd['quantity'],
             override_quantity=cd['override']
         )
+        cart.save()
     return redirect("cart:detail")
 
 
@@ -36,3 +29,13 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:detail')
+
+
+def cart_detail(request):
+    cart = Cart(request)
+    form = CartAddProductForm(request.POST)
+    context = {
+        'cart': cart,
+        'form': form,
+    }
+    return render(request, 'cart/cart_detail.html', context)

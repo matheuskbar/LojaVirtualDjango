@@ -66,7 +66,20 @@
                             <a href="{{ product.get_absolute_url }}" class="black"><b>{{ product.name }}</b></a>
                         </td>
                         <td class="align-middle">R$ {{ item.price }}</td>
-                        <td class="align-middle">{{ item.quantity }}</td>
+                        <td class="align-middle">
+                            <form action="{% url 'cart:add' product.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-4" style="padding:0 0.3em;">
+                                        {% render_field item.update_quantity_form.quantity class+="form-control" %}
+                                    </div>
+                                    <div class="col-6" style="padding:0 0.3em;">
+                                        <input class="btn btn-info form-control" type="submit" value="Atualizar">
+                                    </div>
+                                </div>
+                                {{ item.update_quantity_form.override }}
+                            </form>
+                        </td>
                         <td class="align-middle">R$ {{ item.total_price }}</td>
                         <td class="align-middle">
                             <form action="{% url 'cart:remove' product.id %}" method="post">

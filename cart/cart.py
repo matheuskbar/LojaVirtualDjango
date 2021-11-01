@@ -1,6 +1,7 @@
 import copy
 from decimal import Decimal
 
+from cart.forms import CartAddProductForm
 from products.models import Product
 
 
@@ -22,11 +23,14 @@ class Cart:
         for item in cart.values():
             item["price"] = Decimal(item["price"])
             item["total_price"] = item["quantity"] * item["price"]
-            # item["update_quantity_form"] = CartAddProductForm(
-            #     initial={"quantity": item["quantity"], "override": True}
-            # )
+            item["update_quantity_form"] = CartAddProductForm(
+                initial={"quantity": item["quantity"], "override": True}
+            )
 
             yield item
+
+    def __len__(self):
+        return sum(item["quantity"] for item in self.cart.values())
 
     def add(self, product, quantity=1, override_quantity=False):
         product_id = str(product.id)
@@ -35,15 +39,13 @@ class Cart:
             self.cart[product_id] = {
                 'quantity': 0,
                 'price': str(product.price),
-                'total_price': str(product.price),
             }
             if override_quantity:
                 self.cart[product_id]['quantity'] = quantity
             else:
                 self.cart[product_id]['quantity'] += quantity
 
-            self.cart[product_id]['total_price'] = str(product.price * quantity)
-
+        self.cart[product_id]['quantity'] = min(20, self.cart[product_id]['quantity'])
         self.save()
 
     def remove(self, product):
