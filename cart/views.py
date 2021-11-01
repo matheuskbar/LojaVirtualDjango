@@ -7,6 +7,7 @@ from products.models import Product
 
 
 def cart_detail(request):
+    
     return render(request, 'cart/cart_detail.html')
 
 
@@ -16,11 +17,11 @@ def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)
     if form.is_valid():
-        form.save()
+        print(form.cleaned_data)
+        cd = form.cleaned_data
         cart.add(
             product=product,
-            quantity=form.quantity,
-            override_quantity=form.override
+            quantity=cd['quantity'],
+            override_quantity=cd['override']
         )
-
     return redirect("cart:detail")
