@@ -1,16 +1,18 @@
 import copy
 from decimal import Decimal
 
-from cart.forms import CartAddProductForm
+from django.conf import settings
+
 from products.models import Product
+from .forms import CartAddProductForm
 
 
 class Cart:
     def __init__(self, request):
-        if request.session.get('cart') is None:
-            request.session['cart'] = {}
+        if request.session.get(settings.CART_SESSION_ID) is None:
+            request.session[settings.CART_SESSION_ID] = {}
 
-        self.cart = request.session['cart']
+        self.cart = request.session[settings.CART_SESSION_ID]
         self.session = request.session
 
     def __iter__(self):
@@ -40,10 +42,11 @@ class Cart:
                 'quantity': 0,
                 'price': str(product.price),
             }
-            if override_quantity:
-                self.cart[product_id]['quantity'] = quantity
-            else:
-                self.cart[product_id]['quantity'] += quantity
+
+        if override_quantity:
+            self.cart[product_id]['quantity'] = quantity
+        else:
+            self.cart[product_id]['quantity'] += quantity
 
         self.cart[product_id]['quantity'] = min(20, self.cart[product_id]['quantity'])
         self.save()

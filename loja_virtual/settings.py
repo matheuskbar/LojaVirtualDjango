@@ -150,3 +150,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+
+# Cart
+CART_SESSION_ID = 'cart'
+CART_ITEM_MAX_QUANTITY = 20

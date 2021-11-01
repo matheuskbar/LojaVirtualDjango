@@ -92,6 +92,27 @@
             {% endfor %}
           </tbody>
         </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">TOTAL DO PEDIDO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <th scope="row">Subtotal</th>
+                <td>R$ valor</td>
+            </tr>
+            <tr>
+                <th scope="row">Entrega</th>
+                <td>Valor entrega</td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td>Valor Total</td>
+            </tr>
+          </tbody>
+        </table>
     {% else %}
         <h6>O carrinho está vazio.</h6>
     {% endif %}
