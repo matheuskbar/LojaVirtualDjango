@@ -20,7 +20,7 @@ class Product(TimeStampedModel):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_available = models.BooleanField(default=True)
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.SET_NULL, blank=True, null=True)
+    category = models.ManyToManyField(Category, related_name='products', blank=True)
 
     objects = models.Manager()
     available = AvailableManager()
