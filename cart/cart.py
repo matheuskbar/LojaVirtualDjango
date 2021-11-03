@@ -41,6 +41,7 @@ class Cart:
             self.cart[product_id] = {
                 'quantity': 0,
                 'price': str(product.price),
+                'total_price': str(product.price),
             }
 
         if override_quantity:
@@ -48,6 +49,7 @@ class Cart:
         else:
             self.cart[product_id]['quantity'] += quantity
 
+        self.cart[product_id]['total_price'] = str(self.cart[product_id]['quantity'] * product.price)
         self.cart[product_id]['quantity'] = min(20, self.cart[product_id]['quantity'])
         self.save()
 
@@ -59,3 +61,9 @@ class Cart:
 
     def save(self):
         self.session.modified = True
+
+    def get_total_price(self):
+        sum_total = 0
+        for item in self.cart.values():
+            sum_total += float(item['total_price'])
+        return f'{sum_total:.2f}'
