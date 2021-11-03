@@ -6,6 +6,10 @@
         background-color: #121317;
     }
 
+    .black {
+        color: #000;
+    }
+
 {% endblock %}
 
 {% block header %}
@@ -28,7 +32,7 @@
               <a class="nav-link white" href="#">Contato</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link white" href="#">Carrinho</a>
+              <a class="nav-link white" href="{% url 'cart:detail' %}">Carrinho</a>
             </li>
           </ul>
       </div>
@@ -41,9 +45,24 @@
             <img src="/media/{{ object.image }}" alt="" style="width: 100%;">
         </div>
         <div class="col-7">
-            <h3>{{ object.name }}</h3>
-            <h2>R$ {{ object.price }}</h2>
-            <p>{{ object.description }}</p>
+            <h3>{{ product.name }}</h3>
+            <h2>R$ {{ product.price }}</h2>
+            <p>{{ product.description }}</p>
+            <form class="form-group" action="{% url 'cart:add' product.id %}" method="post">
+                <p class="form-inline">
+                    {{ form.quantity.label_tag }}
+                    {{ form.quantity }}
+                    {{ form.override }}
+                </p>
+                {% csrf_token %}
+                <input class="btn btn-success" type="submit" value="Adicionar ao Carrinho">
+            </form><br>
+            <p>
+                Voltar para todos os <a class="black" href="{% url 'products:list' %}">
+                    <b>produtos.</b>
+                </a>
+
+            </p>
         </div>
     </main>
 {% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block style %}
+    #main-nav {
+        background-color: #121317;
+    }
+
+    .black {
+        color: black;
+    }
+
+{% endblock %}
+
+{% block title %}Carrinho{% endblock %}
+
+{% block header %}
+    <nav id="main-nav" class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'pages:home' %}">
+              <img id="logo-img" src="/static/img/logo.png" alt="Minha loja">
+          </a>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'products:list' %}">Loja</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Tendências</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'cart:detail' %}">Carrinho</a>
+            </li>
+          </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    {% if cart %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">PRODUTO</th>
+              <th scope="col">PREÇO</th>
+              <th scope="col">QUANTIDADE</th>
+              <th scope="col">TOTAL</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <tr>
+                        <th scope="row" class="text-center">
+                            <img src="/media/{{ product.image }}" alt="" style="width: 6em;">
+                        </th>
+                        <td class="align-middle">
+                            <a href="{{ product.get_absolute_url }}" class="black"><b>{{ product.name }}</b></a>
+                        </td>
+                        <td class="align-middle">R$ {{ item.price }}</td>
+                        <td class="align-middle">
+                            <form action="{% url 'cart:add' product.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-4" style="padding:0 0.3em;">
+                                        {% render_field item.update_quantity_form.quantity class+="form-control" %}
+                                    </div>
+                                    <div class="col-6" style="padding:0 0.3em;">
+                                        <input class="btn btn-info form-control" type="submit" value="Atualizar">
+                                    </div>
+                                </div>
+                                {{ item.update_quantity_form.override }}
+                            </form>
+                        </td>
+                        <td class="align-middle">R$ {{ item.total_price }}</td>
+                        <td class="align-middle">
+                            <form action="{% url 'cart:remove' product.id %}" method="post">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="Remover">
+                            </form>
+                        </td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">TOTAL DO PEDIDO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <th scope="row">Subtotal</th>
+                <td>R$ {{ cart.get_total_price }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Entrega</th>
+                <td>Valor entrega</td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td>Valor Total</td>
+            </tr>
+          </tbody>
+        </table>
+    {% else %}
+        <h6>O carrinho está vazio.</h6>
+    {% endif %}
+{% endblock %}
