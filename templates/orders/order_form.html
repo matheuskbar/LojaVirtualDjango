@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block style %}
+    #main-nav {
+        background-color: #121317;
+    }
+
+    .black {
+        color: black;
+    }
+
+{% endblock %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block header %}
+    <nav id="main-nav" class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'pages:home' %}">
+              <img id="logo-img" src="/static/img/logo.png" alt="Minha loja">
+          </a>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'products:list' %}">Loja</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Tendências</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'cart:detail' %}">Carrinho</a>
+            </li>
+          </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    {% if cart %}
+        <main class="container-fluid">
+            <h1 class="text-center">Checkout</h1>
+            <div class="row">
+                <div class="col-7">
+                    <h3>Seus Dados</h3>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-danger mb-4">
+                            Continuar
+                        </button>
+                    </form>
+                </div>
+                <aside class="col">
+                    <h5>Detalhes do Pedido</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            {% for item in cart %}
+                                <p>
+                                    {{ item.quantity }}x {{ item.product }} --- R$ {{ item.total_price }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p>
+                        <h6>Preço total do pedido: R$ {{ cart.get_total_price }}</h6>
+                    </p>
+                </aside>
+            </div>
+        </main>
+    {% else %}
+        <h5>O carrinho está vazio.</h5>
+    {% endif %}
+{% endblock %}

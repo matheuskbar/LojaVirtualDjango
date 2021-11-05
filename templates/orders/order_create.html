@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    #main-nav {
+        background-color: #121317;
+    }
+
+    .black {
+        color: black;
+    }
+
+{% endblock %}
+
+{% block title %}Pagamento{% endblock %}
+
+{% block header %}
+    <nav id="main-nav" class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'pages:home' %}">
+              <img id="logo-img" src="/static/img/logo.png" alt="Minha loja">
+          </a>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link white" aria-current="page" href="#">Sobre Nós</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'products:list' %}">Loja</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Tendências</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="#">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link white" href="{% url 'cart:detail' %}">Carrinho</a>
+            </li>
+          </ul>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <main class="container-fluid">
+        <h1 class="text-center">Pagamento</h1>
+        <p>O número do seu pedido é {{ order.id }}</p>
+        <p>Escolha o pagamento</p>
+    </main>
+{% endblock %}
